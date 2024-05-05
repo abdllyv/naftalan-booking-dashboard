@@ -1,17 +1,43 @@
-import React, { useContext } from "react";
+// React
+import React, { useCallback, useContext } from "react";
+
+// Context
 import { MainContext } from "../utils/MainContext";
+
+// Axios
+import axios from "axios";
+
+// Component
+import EmailSideBarMenu from "../components/side-bar-menu/EmailSideBarMenu";
 
 // Icon
 import menuIcon from "../assets/images/icon/burger-menu.svg";
 import trash from "../assets/images/icon/trash.svg";
 import add from "../assets/images/icon/add-plus.svg";
 import edit from "../assets/images/icon/edit.svg";
-import EmailSideBarMenu from "../components/side-bar-menu/EmailSideBarMenu";
 
 const EmailTemplates = () => {
   // Global State
   const { mainMneuVisible, setMainMneuVisible, emailVisible, setEmailVisible } =
     useContext(MainContext);
+
+  // Get Setting Data
+  const getEmailData = useCallback(async (page_number) => {
+    await axios
+      .get(
+        `http://naftalan-backend.uptodate.az/private/hotel/read/all?locale="en"&page_length=20&page_number=${page_number}`
+        // {
+        //   crossdomain: true,
+        // }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <main>
       <section className="email-templates">
@@ -87,7 +113,7 @@ const EmailTemplates = () => {
               : setEmailVisible(false);
           }}
         ></div>
-        <EmailSideBarMenu/>
+        <EmailSideBarMenu />
       </section>
     </main>
   );
