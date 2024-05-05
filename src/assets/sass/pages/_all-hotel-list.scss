@@ -1,0 +1,42 @@
+@import "../mixins";
+.all-hotel-list {
+  .container {
+    .edit-area {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 4px 0;
+      margin: 20px 0;
+      .title {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #2d334a;
+      }
+      .add-btn {
+        @include addBtn();
+      }
+    }
+  }
+  .hotel-info-area {
+    .container {
+      .table {
+        tbody {
+          tr {
+            cursor: auto;
+            td {
+              .btn-area {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .pagination {
+    @include pagination();
+  }
+}

@@ -1,0 +1,176 @@
+.reservation {
+  // .reservation-info-area {
+  //   .table,
+  //   tr,
+  //   td,
+  //   th {
+  //     border-bottom: 2px solid #e9ebed;
+  //     border-collapse: collapse;
+  //     text-align: left;
+  //   }
+
+  //   .table {
+  //     th {
+  //       color: #ff014ff5;
+  //       font-weight: 600;
+  //       font-size: 14px;
+  //       padding: 8px;
+  //     }
+  //     .carImg {
+  //       width: 10%;
+  //       img {
+  //         width: 100%;
+  //         height: 100%;
+  //         object-fit: contain;
+  //       }
+  //     }
+  //     .edit {
+  //       a {
+  //         margin-right: 10px;
+  //       }
+  //       a {
+  //         &:hover {
+  //           svg {
+  //             path {
+  //               color: green;
+  //             }
+  //           }
+  //         }
+  //       }
+  //       svg {
+  //         cursor: pointer;
+  //         &:hover {
+  //           transform: scale(1.2);
+  //           path {
+  //             color: red;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   .table {
+  //     width: 100%;
+  //     thead {
+  //       tr {
+  //         th {
+  //           padding: 6px;
+  //           padding: 10px 20px;
+  //           font-size: 14px;
+  //           font-weight: 800;
+  //           line-height: 18px;
+  //           color: #414d5c;
+  //         }
+  //       }
+  //     }
+  //     tbody {
+  //       td,
+  //       tr {
+  //         font-size: 14px;
+  //         font-weight: 400;
+  //         line-height: 22px;
+  //         color: #000716;
+  //         cursor: pointer;
+  //       }
+  //       td {
+  //         padding: 9px 20px;
+  //         button {
+  //           border: none;
+  //           background-color: transparent;
+  //           outline: none;
+  //           cursor: pointer;
+  //           width: 24px;
+  //           height: 24px;
+  //           img {
+  //             width: 24px;
+  //             height: 24px;
+  //           }
+  //         }
+  //       }
+  //       tr {
+  //         &:nth-child(even) {
+  //           background-color: #f2f2f2;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  .sidebar-reservatoin-menu {
+    width: 380px;
+    height: 100vh;
+    box-shadow: 0px 1px 1px 0px #e9ebed66;
+    box-shadow: 0px 6px 36px 0px #0007161a;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    background-color: #fff;
+    transform: translateX(100%);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 99999;
+    transition: 0.4s ease-in;
+    &.isOpenMenu {
+      transform: translateX(0%);
+      opacity: 1;
+      visibility: visible;
+    }
+    .head {
+      width: 100%;
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #ece6e6;
+      .caption {
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 24px;
+        letter-spacing: -0.2px;
+        color: #13151f;
+      }
+      .icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+          display: flex;
+          align-content: center;
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .body {
+      margin-top: 18px;
+      padding: 0 28px;
+
+      .submmenu-table,
+      tr,
+      td,
+      th {
+        border-bottom: 1px solid #e9ebed;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      .submmenu-table {
+        width: 100%;
+        th {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 22px;
+          padding: 9px 20px 9px 2px;
+          color: #2d334a;
+        }
+        td {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 22px;
+          color: #2d334a;
+        }
+      }
+    }
+  }
+}

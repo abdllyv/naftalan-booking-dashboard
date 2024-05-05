@@ -1,0 +1,35 @@
+.landing-page {
+  width: 100%;
+  height: calc(100vh - 66.8px);
+  .body {
+    .container {
+      .row {
+        width: 100%;
+        height: calc(100vh - 210.8px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .text {
+          font-size: 40px;
+          font-weight: 700;
+          line-height: 1.2;
+          color: #3d0700;
+          .naftalan {
+            color: #a4431c;
+          }
+          transform: translateY(100px);
+          transition: 0.8s ease;
+          &.up {
+            transform: translateY(0px);
+          }
+        }
+      }
+    }
+  }
+  .line {
+    width: 100%;
+    height: 70px;
+    background-color: #643933;
+  }
+}

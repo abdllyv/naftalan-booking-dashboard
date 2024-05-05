@@ -1,0 +1,708 @@
+// Google Font Family
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap");
+@import "./mixins";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Open Sans";
+}
+input[type="number"] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.container {
+  padding: 0 30px;
+}
+
+.scrool {
+  overflow-y: scroll;
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #757575;
+  }
+  &::-webkit-scrollbar-track-piece:end {
+    margin-bottom: 15px;
+  }
+
+  &::-webkit-scrollbar-track-piece:start {
+    margin-top: 15px;
+  }
+}
+
+.sub-header {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #643933;
+
+  height: 74px;
+  .container {
+    height: 100%;
+    .row {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .info {
+        padding: 7px 0;
+        display: flex;
+        gap: 30px;
+        .caption {
+          font-size: 32px;
+          font-weight: 800;
+          line-height: 40px;
+          letter-spacing: -0.63px;
+          color: #e9ebed;
+        }
+        button {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 100%;
+          background: #ece6e6;
+          border: none;
+          outline: none;
+          cursor: pointer;
+        }
+      }
+      .search-form {
+        max-width: 330px;
+        width: 100%;
+        input {
+          width: 100%;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          padding: 6px 14px;
+          border: 2px solid #9ba7b6;
+          border-radius: 8px;
+          outline: none;
+          &::placeholder {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: #2d334a;
+          }
+        }
+      }
+    }
+  }
+}
+.reservation-info-area,
+.hotel-info-area,
+.discount-info-area {
+  .table,
+  tr,
+  td,
+  th {
+    border-bottom: 2px solid #e9ebed;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .table {
+    th {
+      color: #ff014ff5;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px;
+    }
+    .carImg {
+      width: 10%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+    .edit {
+      a {
+        margin-right: 10px;
+      }
+      a {
+        &:hover {
+          svg {
+            path {
+              color: green;
+            }
+          }
+        }
+      }
+      svg {
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.2);
+          path {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+  .table {
+    width: 100%;
+    thead {
+      tr {
+        th {
+          padding: 6px;
+          padding: 10px 20px;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 18px;
+          color: #414d5c;
+        }
+      }
+    }
+    tbody {
+      td,
+      tr {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        color: #000716;
+        cursor: pointer;
+      }
+      td {
+        padding: 9px 20px;
+        button {
+          border: none;
+          background-color: transparent;
+          outline: none;
+          cursor: pointer;
+          width: 24px;
+          height: 24px;
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+      tr {
+        &:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+}
+
+.overlay-sub-menu {
+  opacity: 0;
+  visibility: hidden;
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: #00000025;
+  }
+}
+
+.hotel-detail-header,
+.discount-header {
+  .tab-list {
+    margin: 20px 0;
+    display: flex;
+    .tab-item {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      padding: 16px 29px;
+      color: #575c6e;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s ease;
+      user-select: none;
+      &.active {
+        color: #ad471f;
+        border-color: #ad471f;
+      }
+    }
+  }
+  .edit-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 4px 0;
+    margin-bottom: 20px;
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #2d334a;
+    }
+    .add-btn {
+      @include addBtn();
+    }
+  }
+}
+
+// Acordion
+.description-acordion-area,
+.seo-acordion-area,
+.room-detail-acordion-area,
+.email-acordion-area {
+  box-shadow: 0px 0px 4px 0px #414d5c33;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  .acordion-group {
+    &.active {
+      .axordion-head {
+        background: #ece6e6;
+        border-radius: 8px;
+        .icon {
+          img {
+            transform: rotate(180deg);
+          }
+        }
+      }
+      .acrodion-body {
+        padding: 20px;
+        opacity: 1;
+        visibility: visible;
+        transform: scaleY(1);
+        transform-origin: top center;
+      }
+    }
+    .axordion-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      transition: 0.4s ease;
+      .acordion-caption {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        color: #575c6e;
+      }
+      .icon {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .acrodion-body {
+      // padding: 20px;
+      transition: 0.4s ease;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: scaleY(0);
+      transform-origin: top center;
+      .form-group {
+        width: 100%;
+        margin-bottom: 10px;
+        label {
+          display: block;
+          padding: 10px 0 4px;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #2d334a;
+        }
+        input {
+          @include inputStyle();
+        }
+        textarea {
+          width: 100%;
+          border-radius: 4px;
+          padding: 7px 14px;
+          border: 2px solid #9ba7b6;
+          height: 73px;
+          resize: none;
+          &:focus {
+            outline-color: #59616b;
+          }
+        }
+      }
+      .form-footer {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        .handle-area {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          .error-text {
+            @include errorTExt();
+          }
+          button {
+            @include primaryBtn();
+          }
+        }
+      }
+    }
+  }
+}
+
+// Room
+.room-main-form {
+  .inp-area {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 5%;
+    row-gap: 20px;
+    .form-group {
+      width: 30%;
+      label {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 22px;
+        color: #000716;
+        margin-bottom: 4px;
+      }
+      .inp {
+        @include inputStyle();
+      }
+    }
+    .checkbox-group {
+      width: 100%;
+      // On Off toogle Button Style
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+        .checkbox {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #c7c7cc;
+          transition: 0.4s;
+          &::before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+          }
+          &.round {
+            border-radius: 34px;
+            &::before {
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+      .checkbox:checked + .slider {
+        background-color: #1dc9a0;
+      }
+
+      .checkbox:focus + .slider {
+        box-shadow: 0 0 1px #1dc9a0;
+      }
+
+      .checkbox:checked + .slider:before {
+        transform: translateX(23px);
+      }
+    }
+    .select {
+      position: relative;
+
+      &.open {
+        .icon {
+          img {
+            transform: rotate(180deg);
+          }
+        }
+        .select-area {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      .select-inp {
+        padding: 7px 34px 7px 14px;
+        cursor: pointer;
+      }
+
+      .icon {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        img {
+          transition: 0.4s ease;
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+        }
+      }
+      .select-area {
+        position: absolute;
+        width: 100%;
+        top: 65px;
+        left: 0;
+        z-index: 10;
+        //    height: 111.6px;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.4s ease;
+
+        .select-list {
+          border: 1px solid #9ba7b6;
+          border-radius: 8px;
+          background-color: #fff;
+          padding: 10px 0;
+          height: 100%;
+          .select-item {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: #575c6e;
+            padding: 3px 10px;
+            margin: 3px 0;
+            cursor: pointer;
+            transition: 0.3s ease;
+            &:hover {
+              background-color: #cccccc70;
+            }
+          }
+          .alert-text {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #5a5a5a;
+            button {
+              @include addBtn();
+              padding: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .form-footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    .error-text {
+      @include errorTExt();
+    }
+    button {
+      @include primaryBtn();
+    }
+  }
+}
+
+// Hotel Detail General && Setting
+.main-input-area {
+  .inp-area {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 5%;
+    row-gap: 20px;
+    .form-group {
+      width: 30%;
+      label {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 22px;
+        color: #000716;
+        margin-bottom: 4px;
+      }
+      .inp {
+        @include inputStyle();
+      }
+    }
+    .checkbox-group {
+      width: 100%;
+      // On Off toogle Button Style
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+        .checkbox {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #c7c7cc;
+          transition: 0.4s;
+          &::before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+          }
+          &.round {
+            border-radius: 34px;
+            &::before {
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+      .checkbox:checked + .slider {
+        background-color: #1dc9a0;
+      }
+
+      .checkbox:focus + .slider {
+        box-shadow: 0 0 1px #1dc9a0;
+      }
+
+      .checkbox:checked + .slider:before {
+        transform: translateX(23px);
+      }
+    }
+    .select {
+      position: relative;
+
+      &.open {
+        .icon {
+          img {
+            transform: rotate(180deg);
+          }
+        }
+        .select-area {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      .select-inp {
+        padding: 7px 34px 7px 14px;
+        cursor: pointer;
+      }
+
+      .icon {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        img {
+          transition: 0.4s ease;
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+        }
+      }
+      .select-area {
+        position: absolute;
+        width: 100%;
+        top: 65px;
+        left: 0;
+        z-index: 10;
+        //    height: 111.6px;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.4s ease;
+
+        .select-list {
+          border: 1px solid #9ba7b6;
+          border-radius: 8px;
+          background-color: #fff;
+          padding: 10px 0;
+          height: 100%;
+          .select-item {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: #575c6e;
+            padding: 3px 10px;
+            margin: 3px 0;
+            cursor: pointer;
+            transition: 0.3s ease;
+            &:hover {
+              background-color: #cccccc70;
+            }
+          }
+          .alert-text {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #5a5a5a;
+            button {
+              @include addBtn();
+              padding: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .form-footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    .error-text {
+      @include errorTExt();
+    }
+    button {
+      @include primaryBtn();
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import "../../mixins";
+// Reset Code
+.hotel-detail-room-detail {
+  .container {
+    .main-caption {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      color: #2d334a;
+      margin-bottom: 10px;
+    }
+  }
+}
+.hotel-detail-room-detail {
+  .container {
+    .artibute-area {
+      margin-bottom: 20px;
+      .atribute-head {
+        .add-area {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          margin-bottom: 20px;
+          .add-caption {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 20px;
+            color: #2d334a;
+          }
+          button {
+            @include addBtn();
+          }
+        }
+      }
+      .atribute-body {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        .character-list {
+          .list-title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 20px;
+            color: #2d334a;
+          }
+          .list {
+            margin-top: 4px;
+            padding-left: 25px;
+            .list-item {
+              padding: 6px;
+              list-style-type: disc;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 20px;
+              color: #575c6e;
+            }
+          }
+        }
+      }
+    }
+    .image-area {
+      @include photoArea();
+    }
+    .form-footer {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin: 40px 0;
+      .handle-area {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .error-text {
+          @include errorTExt();
+        }
+        button {
+          @include primaryBtn();
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+.sidebar-main-menu {
+  width: 280px;
+  height: 100vh;
+  box-shadow: 0px 1px 1px 0px #e9ebed66;
+  box-shadow: 0px 6px 36px 0px #0007161a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  transform: translateX(-100%);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 99999;
+  transition: 0.4s ease-in;
+  &.isOpenMenu {
+    transform: translateX(0%);
+    opacity: 1;
+    visibility: visible;
+  }
+  .head {
+    width: 100%;
+    padding: 22px 28px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #ece6e6;
+    .caption {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 24px;
+      letter-spacing: -0.2px;
+      color: #13151f;
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+        display: flex;
+        align-content: center;
+      }
+    }
+  }
+  .body {
+    .menu-list {
+      margin-top: 18px;
+      padding: 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .menuItem {
+        a {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          color: #13151f;
+          &.active {
+            color: #ad471f;
+          }
+        }
+      }
+    }
+  }
+}

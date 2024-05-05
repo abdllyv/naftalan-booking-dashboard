@@ -1,0 +1,34 @@
+// Variables
+@import "./variables";
+
+// Reset Code
+@import "./base";
+
+// Components
+@import "./components/header";
+@import "./components/sidebar-main-menu";
+@import "./components/image-card";
+@import "./components/sweet-alert";
+
+// Hotel Detail
+@import "./components/hotel-detail/hotel-detail-description";
+@import "./components/hotel-detail/hotel-detail-rooms";
+@import "./components/hotel-detail/hotel-detail-room-detail";
+@import "./components/hotel-detail/hotel-detail-seo";
+@import "./components/hotel-detail/hotel-detail-price-list";
+@import "./components/hotel-detail/hotel-detail-priceList-schedule";
+
+// SideBar Menu
+@import "./components/sidebar-menu/atributes-sidebar-menu";
+
+// Pages
+@import "./pages/landing-page";
+@import "./pages/reservation";
+@import "./pages/all-hotel-list";
+@import "./pages/hotel-detail.scss";
+@import "./pages/exchange-rate";
+@import "./pages/email-templates";
+@import "./pages/coupon-code-overview";
+@import "./pages/discount";
+@import "./pages/file-manager";
+@import "./pages/setting";

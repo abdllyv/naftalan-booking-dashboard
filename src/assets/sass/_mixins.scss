@@ -1,0 +1,133 @@
+@mixin addBtn() {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #eaebed;
+  background: #ad471f;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+@mixin primaryBtn() {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #e9e9ec;
+  padding: 10px 20px;
+  background: #ad471f;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+@mixin errorTExt() {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #b00020;
+}
+
+@mixin inputStyle() {
+  width: 100%;
+  border-radius: 4px;
+  padding: 7px 14px;
+  border: 2px solid #9ba7b6;
+  &:focus {
+    outline-color: #59616b;
+  }
+  &.error {
+    border: 2px solid red;
+    &:focus {
+      outline-color: transparent;
+    }
+  }
+}
+
+// Photo Add Area design
+@mixin photoArea() {
+  .form-group {
+    margin-bottom: 20px;
+    label,
+    button {
+      width: max-content;
+      padding: 6px 22px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 22px;
+      color: #3d0700;
+      background-color: #fff;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border: 2px solid #3d0700;
+      border-radius: 40px;
+      .icon {
+        display: flex;
+        align-items: center;
+        img {
+          width: 14px;
+          height: 14px;
+        }
+      }
+      cursor: pointer;
+    }
+    input {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+    }
+  }
+  .img-cards-area {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+@mixin pagination() {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 15px;
+  button {
+    width: 30px;
+    height: 30px;
+    outline: none;
+    border: none;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.5s ease;
+  }
+  .prev-number,
+  .active,
+  .next-number {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #001d48;
+  }
+  .active {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #ad471f;
+  }
+}

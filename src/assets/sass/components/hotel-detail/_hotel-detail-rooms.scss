@@ -1,0 +1,152 @@
+@import "../../mixins";
+.hotel-detail-rooms {
+  .container {
+    .rooms-head {
+      .main-caption {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+        color: #1e1e1e;
+        margin-bottom: 20px;
+      }
+      .add-area {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 20px;
+        .add-caption {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #2d334a;
+        }
+        button {
+          @include addBtn();
+        }
+      }
+    }
+    .rooms-body {
+      .table,
+      tr,
+      td,
+      th {
+        border-bottom: 2px solid #e9ebed;
+        border-collapse: collapse;
+        text-align: left;
+      }
+      .table {
+        thead,
+        tbody {
+          .edit {
+            width: 155px;
+            text-align: center;
+          }
+          .first {
+            width: calc(100vw - 40px);
+          }
+        }
+      }
+      .table {
+        th {
+          color: #ff014ff5;
+          font-weight: 600;
+          font-size: 14px;
+          padding: 8px;
+        }
+        .carImg {
+          width: 10%;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+        .edit {
+          a {
+            margin-right: 10px;
+          }
+          a {
+            &:hover {
+              svg {
+                path {
+                  color: green;
+                }
+              }
+            }
+          }
+          svg {
+            cursor: pointer;
+            &:hover {
+              transform: scale(1.2);
+              path {
+                color: red;
+              }
+            }
+          }
+        }
+      }
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 6px;
+              padding: 10px 20px;
+              font-size: 14px;
+              font-weight: 800;
+              line-height: 18px;
+              color: #414d5c;
+            }
+          }
+        }
+        tbody {
+          td,
+          tr {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #000716;
+            cursor: pointer;
+          }
+          td {
+            padding: 9px 20px;
+            button {
+              border: none;
+              background-color: transparent;
+              outline: none;
+              cursor: pointer;
+              width: 24px;
+              height: 24px;
+              img {
+                width: 24px;
+                height: 24px;
+              }
+            }
+          }
+          tr {
+            &:nth-child(even) {
+              background-color: #f2f2f2;
+            }
+          }
+        }
+      }
+    }
+    .form-footer {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      .handle-area {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .error-text {
+          @include errorTExt();
+        }
+        button {
+          @include primaryBtn();
+        }
+      }
+    }
+  }
+}

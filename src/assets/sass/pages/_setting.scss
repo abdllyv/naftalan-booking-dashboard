@@ -1,0 +1,36 @@
+@import "../mixins";
+// Reset Code
+.setting {
+  .container {
+    .main-caption {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 28px;
+      letter-spacing: -0.36px;
+      color: #000716;
+      margin: 10px 0 15px;
+    }
+    .form-footer {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      min-height: 36px;
+      .error-text {
+        @include errorTExt();
+      }
+      button {
+        @include primaryBtn();
+      }
+    }
+  }
+}
+.setting {
+  .container {
+    .image-area {
+      margin-bottom: 40px;
+      @include photoArea();
+    }
+  }
+}
