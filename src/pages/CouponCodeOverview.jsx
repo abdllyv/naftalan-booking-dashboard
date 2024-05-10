@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { MainContext } from "../utils/MainContext";
 
 // Icon
@@ -21,6 +21,7 @@ const CouponCodeOverview = () => {
     selectCoupon,
     setSelectCoupon,
   } = useContext(MainContext);
+  const [type, setType] = useState("");
 
   // Get Logo Data
   const getCouponData = useCallback(async () => {
@@ -86,7 +87,13 @@ const CouponCodeOverview = () => {
         <div className="add-area">
           <div className="container">
             <h6 className="title">Add Coupon Code Overview </h6>
-            <button className="add-btn" onClick={() => setCouponVisible(true)}>
+            <button
+              className="add-btn"
+              onClick={() => {
+                setCouponVisible(true);
+                setType("create");
+              }}
+            >
               Add <img src={add} alt="add" />
             </button>
           </div>
@@ -126,6 +133,7 @@ const CouponCodeOverview = () => {
                           onClick={() => {
                             setCouponVisible(true);
                             setSelectCoupon(item);
+                            setType("edit");
                           }}
                         >
                           <img src={edit} alt="edit" />
@@ -152,7 +160,8 @@ const CouponCodeOverview = () => {
               : setSelectCoupon(null);
           }}
         ></div>
-        <CouponSideBarMenu />
+
+        <CouponSideBarMenu selectCoupon={selectCoupon} type={type} />
       </section>
     </main>
   );

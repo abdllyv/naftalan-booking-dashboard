@@ -1,14 +1,11 @@
 // React
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect,  useState } from "react";
 
 // Context
 import { MainContext } from "../utils/MainContext";
 
 // Axios
 import axios from "axios";
-
-// Component
-import ImageCard from "../components/ImageCard";
 
 // Icon
 import menuIcon from "../assets/images/icon/burger-menu.svg";
@@ -29,17 +26,19 @@ const Setting = () => {
 
   /* ------------------------------- Local State ------------------------------ */
   // Back Datas
-  const [imgData, setImgData] = useState(null);
-  const [settingData, setSettingData] = useState([]);
-  const [imgError, setImgError] = useState(null);
+  const [logoImgData, setLogoImgData] = useState(null);
+  const [faviconImgData, setFaviconImgData] = useState(null);
+  const [logoImgError, setLogoImgError] = useState(null);
+  const [faviconImgError, setFaviconImgError] = useState(null);
 
-  const [image, setImage] = useState("");
-  const [preview, setPreview] = useState("");
+  const [logoImage, setLogoImage] = useState("");
+  const [faviconImage, setFaviconImage] = useState("");
+  const [logoPreview, setLogoPreview] = useState("");
+  const [faviconPreview, setFaviconPreview] = useState("");
 
-  const fileInputRef = useRef(null);
-
-  //Photo Choose
-  const handleImg = (e) => {
+console.log(faviconImgData)
+  //Photo Choose Logo
+  const handleLogoImg = (e) => {
     console.log(e);
     // Check if files were selected
     if (!e.target.files || e.target.files.length === 0) {
@@ -48,12 +47,37 @@ const Setting = () => {
     }
 
     let file = e.target.files[0];
-    setImage(file);
+    setLogoImage(file);
 
     let reader = new FileReader();
 
     reader.onload = () => {
-      setPreview(reader.result);
+      setLogoPreview(reader.result);
+    };
+
+    reader.onerror = (err) => {
+      console.error("FileReader error:", err);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  //Photo Choose Favicon
+  const handleFaviconImg = (e) => {
+    console.log(e);
+    // Check if files were selected
+    if (!e.target.files || e.target.files.length === 0) {
+      console.error("No file selected.");
+      return;
+    }
+
+    let file = e.target.files[0];
+    setFaviconImage(file);
+
+    let reader = new FileReader();
+
+    reader.onload = () => {
+      setFaviconPreview(reader.result);
     };
 
     reader.onerror = (err) => {
@@ -67,12 +91,12 @@ const Setting = () => {
   const handleLogoSubmit = async (e) => {
     e.preventDefault();
     const logo = new FormData();
-    logo.append("logo", image);
+    logo.append("logo", logoImage);
     await axios
       .put(`http://naftalan-backend.uptodate.az/private/site-logo/update`, logo)
       .then((res) => {
-        setImgData(res.data.logo);
-        setPreview("");
+        setLogoImgData(res.data.logo);
+        setLogoPreview("");
         window.location.reload();
         toast.info("Data Update!", {
           position: "top-right",
@@ -87,8 +111,34 @@ const Setting = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
-        setImgError(err);
+        setLogoImgError(err);
+      });
+  };
+  // Set Favicon
+  const handleFavIconSubmit = async (e) => {
+    e.preventDefault();
+    const logo = new FormData();
+    logo.append("icon", faviconImage);
+    await axios
+      .put(`http://naftalan-backend.uptodate.az/private/site-icon/update`, logo)
+      .then((res) => {
+        setFaviconImgData(res.data.logo);
+        setFaviconPreview("");
+        window.location.reload();
+        toast.info("Data Update!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      })
+      .catch((err) => {
+        setFaviconImgError(err);
       });
   };
 
@@ -174,17 +224,33 @@ const Setting = () => {
         crossdomain: true,
       })
       .then((res) => {
-        setImgData(res.data.logo);
+        setLogoImgData(res.data.logo);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  // Get Favicon Data
+  const getFaviconData = useCallback(async () => {
+    await axios
+      .get(`http://naftalan-backend.uptodate.az/site-icon/read`, {
+        crossdomain: true,
+      })
+      .then((res) => {
+        setFaviconImgData(res.data.icon);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Rendering Data
   useEffect(() => {
     getLogoData();
     getSettingData();
-  }, [getLogoData, getSettingData]);
+    getFaviconData();
+  }, [getFaviconData, getLogoData, getSettingData]);
 
   return (
     <main>
@@ -208,6 +274,7 @@ const Setting = () => {
           onClick={() => mainMneuVisible && setMainMneuVisible(false)}
         ></div>
         <div className="container">
+          {/* Setting */}
           <form
             action=""
             className="main-input-area "
@@ -269,10 +336,11 @@ const Setting = () => {
               <div className="form-group">
                 <label htmlFor="site_phone">Telephone</label>
                 <input
-                  type="number"
+                  type="tel"
                   className={errors.site_phone ? "inp error" : "inp"}
                   id="site_phone"
                   name="site_phone"
+                  placeholder="+994555555555"
                   {...register("site_phone")}
                 />
               </div>
@@ -292,10 +360,11 @@ const Setting = () => {
               <button>Save</button>
             </div>
           </form>
+          {/* Logo */}
           <form className="image-area">
             <h2 className="main-caption">Main</h2>
             <div className="form-group">
-              <label htmlFor="add-main-photo" className="add">
+              <label htmlFor="add-logo-photo" className="add">
                 <div className="icon">
                   <img src={addFile} alt="addfile" />
                 </div>
@@ -303,52 +372,85 @@ const Setting = () => {
               </label>
               <input
                 type="file"
-                name="add-main-photo"
-                id="add-main-photo"
-                onChange={handleImg}
-                ret={fileInputRef}
+                name="add-logo-photo"
+                id="add-logo-photo"
+                onChange={handleLogoImg}
               />
             </div>
             <div className="img-cards-area">
-              {/* <ImageCard
-                img={preview ? preview : imgData}
-                type={preview ? "new logo" : "logo"}
-              /> */}
-
               <div className="img-card">
                 <div className="top"></div>
                 <div className="middle">
                   <img
                     src={
-                      preview
-                        ? preview
-                        : `http://naftalan-backend.uptodate.az${imgData}`
+                      logoPreview
+                        ? logoPreview
+                        : `http://naftalan-backend.uptodate.az${logoImgData}`
                     }
                     alt="logo"
                   />
                 </div>
-                <div className="bottom">
-                  {/* <h6 className="img-title">Filename.jpg</h6> */}
-                </div>
+                <div className="bottom"></div>
               </div>
             </div>
             <div className="form-footer">
-              {preview && (
+              {logoPreview && (
                 <>
-                  {imgError && (
+                  {logoImgError && (
                     <p className="error-text">
                       Update failed, please check again
                     </p>
                   )}
 
-                  <button
-                    onClick={() => {
-                      setPreview("");
-                    }}
-                  >
-                    Cancel
-                  </button>
                   <button onClick={(e) => handleLogoSubmit(e)}>Save</button>
+                </>
+              )}
+            </div>
+          </form>
+
+          {/* Favicon */}
+          <form className="image-area">
+            <h2 className="main-caption">Favicon</h2>
+            <div className="form-group">
+              <label htmlFor="add-favicon-photo" className="add">
+                <div className="icon">
+                  <img src={addFile} alt="addfile" />
+                </div>
+                Choose file
+              </label>
+              <input
+                type="file"
+                name="add-favicon-photo"
+                id="add-favicon-photo"
+                onChange={handleFaviconImg}
+              />
+            </div>
+            <div className="img-cards-area">
+              <div className="img-card">
+                <div className="top"></div>
+                <div className="middle">
+                  <img
+                    src={
+                      faviconPreview
+                        ? faviconPreview
+                        : `http://naftalan-backend.uptodate.az${faviconImgData}`
+                    }
+                    alt="logo"
+                  />
+                </div>
+                <div className="bottom"></div>
+              </div>
+            </div>
+            <div className="form-footer">
+              {faviconPreview && (
+                <>
+                  {faviconImgError && (
+                    <p className="error-text">
+                      Update failed, please check again
+                    </p>
+                  )}
+
+                  <button onClick={(e) => handleFavIconSubmit(e)}>Save</button>
                 </>
               )}
             </div>

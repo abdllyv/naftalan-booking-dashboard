@@ -202,6 +202,7 @@ const HotelDetailGeneral = () => {
             });
             setHotelGeneral(updatedHotelGeneral);
             setUpdateState(false);
+            // console.log(hotelGeneral)
           }
         })
         .catch((err) => console.log(err));
@@ -349,18 +350,64 @@ const HotelDetailGeneral = () => {
     var objKeys = Object.getOwnPropertyNames(data);
     const updatedHotelGeneral = hotelGeneral.map((item) => {
       if (objKeys.includes(item.title)) {
-        console.log(item);
+        // console.log(item);
         return { ...item, value: data[item.title] };
       }
       return item;
     });
-    console.log(updatedHotelGeneral)
+    // console.log(updatedHotelGeneral);
 
     updatedHotelGeneral.map((data) => body.append(data.title, data.value));
-    // for (const pair of body.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
-    // body.delete("hotel_associated_attributes");
+
+    /* -------------------------- Handle Data Specific -------------------------- */
+
+    // General Hotel Img List
+    const asositeImg = hotelGeneral.find(
+      (item) => item.title === "hotel_associated_images" && item.value
+    );
+    console.log(asositeImg);
+
+    // Main Img
+    const mainImg = updatedHotelGeneral.find(
+      (item) => item.title === "hotel_associated_main_image"
+    );
+
+    // Coupon
+    const coupon = updatedHotelGeneral.find(
+      (item) => item.title === "hotel_associated_coupons" && item.value
+    );
+
+    // // Atribute
+    const atributes = updatedHotelGeneral.find(
+      (item) => item.title === "hotel_associated_attributes" && item.value
+    );
+    const mergedIds = [];
+    for (const key in atributes.value) {
+      const innerArray = atributes.value[key];
+      innerArray.forEach((item) => {
+        mergedIds.push(item.id);
+      });
+    }
+    const atributeResult = mergedIds.join(",");
+
+    // /* ---------------------------- Set specific Data --------------------------- */
+    body.set(
+      "hotel_associated_images",
+      asositeImg.value.map((item) => item.id).join(",")
+    );
+    body.set(
+      "hotel_associated_main_image",
+      mainImg.value !== null ? mainImg.value.id : ""
+    );
+    body.set("hotel_associated_attributes", atributeResult);
+    body.set(
+      "hotel_associated_coupons",
+      coupon.value.map((item) => item.id).join(",")
+    );
+
+    for (const pair of body.entries()) {
+      console.log(pair[0], pair[1]);
+    }
 
     axios
       .put(
@@ -371,7 +418,7 @@ const HotelDetailGeneral = () => {
         if (res.status === 200) {
           toast.info("Data Update!", {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -489,13 +536,6 @@ const HotelDetailGeneral = () => {
                     <li
                       className="select-item"
                       onClick={(e) => {
-                        // e.target.parentElement.parentElement.parentElement.children[1].setAttribute(
-                        //   "value",
-                        //   item.character
-                        // );
-                        // e.target.parentElement.parentElement.parentElement.children[1].classList.remove(
-                        //   "error"
-                        // );
                         setValue("hotel_offer_category", item.character);
                         setDropDownVisible(false);
                       }}
@@ -510,7 +550,7 @@ const HotelDetailGeneral = () => {
             <div className="form-group">
               <label htmlFor="hotel_phone">Telephone</label>
               <input
-                type="number"
+                type="tel"
                 className={errors.hotel_phone ? "inp error" : "inp"}
                 id="hotel_phone"
                 name="hotel_phone"
@@ -585,8 +625,8 @@ const HotelDetailGeneral = () => {
               <label htmlFor="hotel_active" className="switch">
                 <input
                   type="checkbox"
-                  id="  hotel_active"
-                  name="  hotel_active"
+                  id="hotel_active"
+                  name="hotel_active"
                   className="checkbox"
                   {...register("hotel_active")}
                 />
@@ -604,7 +644,7 @@ const HotelDetailGeneral = () => {
 
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

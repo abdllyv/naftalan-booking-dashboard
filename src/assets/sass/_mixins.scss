@@ -130,4 +130,9 @@
     line-height: 20px;
     color: #ad471f;
   }
+
+  .next:disabled,
+  .next[disabled] {
+    opacity: 0.5;
+  }
 }

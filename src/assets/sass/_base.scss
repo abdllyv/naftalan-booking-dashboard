@@ -328,10 +328,17 @@ input[type="number"] {
           border-radius: 4px;
           padding: 7px 14px;
           border: 2px solid #9ba7b6;
-          height: 73px;
+          height: 140px;
           resize: none;
           &:focus {
             outline-color: #59616b;
+          }
+          &.error {
+            border-color: red;
+            &:focus {
+              border-color: red;
+              outline-color: red;
+            }
           }
         }
       }

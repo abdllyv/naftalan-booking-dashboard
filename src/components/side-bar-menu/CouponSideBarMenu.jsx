@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import arrow from "../../assets/images/icon/arrow-left.svg";
 import axios from "axios";
 
-const CouponSideBarMenu = () => {
+const CouponSideBarMenu = ({ type, }) => {
   // Global State
   const {
     couponVisible,
@@ -56,6 +56,26 @@ const CouponSideBarMenu = () => {
     resolver: yupResolver(couponSchema),
   });
 
+  useEffect(() => {
+    if (type === "edit") {
+      setValue("coupon_name", selectCoupon.coupon_name);
+      setValue("coupon_code", selectCoupon.coupon_code);
+      setValue("coupon_active", selectCoupon.coupon_active);
+      setValue("coupon_start", selectCoupon.coupon_start);
+      setValue("coupon_end", selectCoupon.coupon_end);
+      setValue("coupon_percentage_value", selectCoupon.coupon_percentage_value);
+    }
+  }, [
+    selectCoupon.coupon_active,
+    selectCoupon.coupon_code,
+    selectCoupon.coupon_end,
+    selectCoupon.coupon_name,
+    selectCoupon.coupon_percentage_value,
+    selectCoupon.coupon_start,
+    setValue,
+    type,
+  ]);
+
   //Setting Form Submit
   const onSubmit = async (data) => {
     const body = new FormData();
@@ -65,7 +85,7 @@ const CouponSideBarMenu = () => {
     body.append("coupon_start", data.coupon_start);
     body.append("coupon_end", data.coupon_end);
     body.append("coupon_percentage_value", data.coupon_percentage_value);
-
+    console.log(data);
     if (selectCoupon === null) {
       try {
         const res = await axios.post(
@@ -87,28 +107,39 @@ const CouponSideBarMenu = () => {
 
         const timer = setTimeout(() => {
           setCouponData([res.data, ...couponData]);
-          setSelectCoupon(null);
+          setSelectCoupon({
+            coupon_name: "",
+            coupon_codeL: "",
+            coupon_activeL: "",
+            coupon_startL: "",
+            coupon_endL: "",
+            coupon_percentage_valueL: "",
+          });
           setCouponVisible(false);
-          reset()
+          reset();
         }, 1000);
         return () => clearTimeout(timer);
-
-
       } catch (err) {
         setErrorText(err.response.data.errors);
       }
     } else {
       try {
-        const res = await axios.post(
-          "http://naftalan-backend.uptodate.az/private/coupon/create",
+        const res = await axios.put(
+          `http://naftalan-backend.uptodate.az/private/coupon/update/${selectCoupon.id}`,
           body
         );
-        setCouponData([res.data, ...couponData]);
-        setSelectCoupon(null);
-        setCouponVisible(false);
+       
+        setCouponData(prevData => {
+          return prevData.map(item => {
+            if (item.id === res.data.id) {
+              return res.data; 
+            }
+            return item;
+          });
+        });
         toast.info("Data Create!", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -117,13 +148,23 @@ const CouponSideBarMenu = () => {
           theme: "dark",
           transition: Bounce,
         });
+        const timer = setTimeout(() => {
+          setCouponVisible(false);
+          setSelectCoupon({
+            coupon_name: "",
+            coupon_codeL: "",
+            coupon_activeL: "",
+            coupon_startL: "",
+            coupon_endL: "",
+            coupon_percentage_valueL: "",
+          });
+        }, 1000);
+        return () => clearTimeout(timer);
       } catch (err) {
         setErrorText(err.response.data.errors);
       }
     }
   };
-
-
 
   return (
     <div

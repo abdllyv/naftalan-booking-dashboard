@@ -1,5 +1,5 @@
 // React
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 // Context
 import { MainContext } from "../utils/MainContext";
@@ -18,25 +18,40 @@ import edit from "../assets/images/icon/edit.svg";
 
 const EmailTemplates = () => {
   // Global State
-  const { mainMneuVisible, setMainMneuVisible, emailVisible, setEmailVisible } =
-    useContext(MainContext);
+  const {
+    mainMneuVisible,
+    setMainMneuVisible,
+    emailData,
+    setEmailData,
+    selectEmail,
+    setSelectEmail,
+    emailVisible,
+    setEmailVisible,
+  } = useContext(MainContext);
 
-  // Get Setting Data
+  // Locale Data
+
+  // Get Email Data Schema
   const getEmailData = useCallback(async (page_number) => {
     await axios
       .get(
-        `http://naftalan-backend.uptodate.az/private/hotel/read/all?locale="en"&page_length=20&page_number=${page_number}`
+        `http://naftalan-backend.uptodate.az/private/public-email-template/read/all`
         // {
         //   crossdomain: true,
         // }
       )
       .then((res) => {
-        console.log(res);
+        setEmailData(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setEmailData]);
+
+  // Rendering DAta
+  useEffect(() => {
+    getEmailData();
+  }, [getEmailData]);
 
   return (
     <main>
@@ -71,32 +86,33 @@ const EmailTemplates = () => {
                 <tr>
                   <th className="first">ID</th>
                   <th className="second">Template name</th>
-                  <th className="changable-tab">Template content</th>
-
                   <th className="edit">Edit && Delete </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="first">123</td>
-                  <td className="second">GARABAG RESORT</td>
-                  <td className="changable-tab">
-                    Double room, CLUBDouble room, CLUBDouble room, CLUBDouble
-                    room, CLUBDouble room, CLUBDouble room, CLUBDouble room,
-                    CLUBDouble room, CLUBDouble room, CLUBDouble room,
-                    CLUBDouble room, CLUBDouble room, CLUBDouble room, CLUB
-                  </td>
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button>
-                        <img src={trash} alt="delete" />
-                      </button>
-                      <button onClick={() => setEmailVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                {emailData.length !== 0 &&
+                  emailData.map((email) => (
+                    <tr key={email.id}>
+                      <td className="first">{email.id}</td>
+                      <td className="second">{email.template_name}</td>
+
+                      <td className="edit">
+                        <div className="btn-area">
+                          {/* <button>
+                            <img src={trash} alt="delete" />
+                          </button> */}
+                          <button
+                            onClick={() => {
+                              setEmailVisible(true);
+                              setSelectEmail(email);
+                            }}
+                          >
+                            <img src={edit} alt="edit" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -113,7 +129,7 @@ const EmailTemplates = () => {
               : setEmailVisible(false);
           }}
         ></div>
-        <EmailSideBarMenu />
+        {selectEmail && <EmailSideBarMenu selectEmail={selectEmail} />}
       </section>
     </main>
   );

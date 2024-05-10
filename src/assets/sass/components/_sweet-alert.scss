@@ -1,5 +1,6 @@
 .sweetAlert-container {
   backdrop-filter: blur(4px);
+  z-index: 99999999;
 }
 .your-title-style {
   font-size: 28px;

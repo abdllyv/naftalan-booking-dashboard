@@ -12,6 +12,10 @@ import CouponCodeOverview from "./pages/CouponCodeOverview";
 import EmailTemplates from "./pages/EmailTemplates";
 import Setting from "./pages/Setting";
 import FileManager from "./pages/FileManager";
+import ContactUs from "./pages/ContactUs";
+import NewsLetter from "./pages/NewsLetter";
+import Comment from "./pages/Comment";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
@@ -23,11 +27,16 @@ const App = () => {
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/hotel" element={<AllHotelList />} />
         <Route path="/hotel-detail/:hotelId?" element={<HotelDetail/>} />
+        <Route path="/home-page" element={<HomePage/>} />
+        <Route path="/comment" element={<Comment/>} />
+
         <Route path="/exchange-rate" element={<ExchangeRate/>} />
         <Route path="/email-templates" element={<EmailTemplates/>} />
         <Route path="/coupon-code-overview" element={<CouponCodeOverview/>} />
         <Route path="/discount" element={<Discount />} />
         <Route path="/photos" element={<FileManager />} />
+        <Route path="/newsletter" element={<NewsLetter />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/settings" element={<Setting />} />
       </Routes>
     </GeneralControl>

@@ -18,6 +18,13 @@
 @import "./components/hotel-detail/hotel-detail-price-list";
 @import "./components/hotel-detail/hotel-detail-priceList-schedule";
 
+// Comment Detail
+@import "./components/comment-detail/hotel_comments";
+@import "./components/comment-detail/main_page-comments";
+
+// Home Page Detail
+@import "./components/home-page-detail/banner";
+
 // SideBar Menu
 @import "./components/sidebar-menu/atributes-sidebar-menu";
 
@@ -31,4 +38,5 @@
 @import "./pages/coupon-code-overview";
 @import "./pages/discount";
 @import "./pages/file-manager";
+@import "./pages/newsletter-member";
 @import "./pages/setting";

@@ -86,6 +86,16 @@ const SideBarMainMenu = () => {
             </NavLink>
           </li>
           <li className="menuItem">
+            <NavLink to="/newsletter" onClick={() => setMainMneuVisible(false)}>
+            Newsletter member
+            </NavLink>
+          </li>
+          <li className="menuItem">
+            <NavLink to="/contact-us" onClick={() => setMainMneuVisible(false)}>
+            Contact us
+            </NavLink>
+          </li>
+          <li className="menuItem">
             <NavLink to="/settings" onClick={() => setMainMneuVisible(false)}>
               Settings
             </NavLink>

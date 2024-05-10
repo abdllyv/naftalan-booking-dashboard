@@ -29,7 +29,9 @@
 .setting {
   .container {
     .image-area {
-      margin-bottom: 40px;
+      &:last-child {
+        margin-bottom: 40px;
+      }
       @include photoArea();
     }
   }

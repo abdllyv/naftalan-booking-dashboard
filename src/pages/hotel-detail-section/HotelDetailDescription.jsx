@@ -16,7 +16,7 @@ const HotelDetailDescription = () => {
     setMainMneuVisible,
     atributeAddAreaVisible,
     setAtributeAddAreaVisible,
-    // hotelDEtailActiveTab,
+    hotelDEtailActiveTab,
     // hotelGeneral,
     // setHotelGeneral,
   } = useContext(MainContext);
@@ -103,7 +103,7 @@ const HotelDetailDescription = () => {
         </div>
         <div className="discription-area">
           <h2 className="main-caption">Description & Short description</h2>
-          <HotelDetailDescriptoinAcordion />
+          <HotelDetailDescriptoinAcordion active={hotelDEtailActiveTab} />
         </div>
         <div className="image-area">
           <h2 className="main-caption">Main</h2>

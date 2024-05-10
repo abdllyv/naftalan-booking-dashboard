@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { MainContext } from "../utils/MainContext";
 
 // Icon
 import menuIcon from "../assets/images/icon/burger-menu.svg";
 import edit from "../assets/images/icon/edit.svg";
 import ExchangeRateSideBarMenu from "../components/side-bar-menu/ExchangeRateSideBarMenu";
+import axios from "axios";
 
 const ExchangeRate = () => {
   // Global State
@@ -13,7 +14,30 @@ const ExchangeRate = () => {
     setMainMneuVisible,
     exchangeRateVisible,
     setExchangeRateVisible,
+
+    // data
+    exchangeRateData,setExchangeRateData
   } = useContext(MainContext);
+
+  // LOcal State
+  // const [data, setData] = useState([]);
+  const [selectData, setSelectData] = useState({
+    currency_code:""
+  });
+  // Get DAta
+  const getCurrencyData = useCallback(async () => {
+    await axios
+      .get(
+        `http://naftalan-backend.uptodate.az/private/currency/read/all?locale=en`
+      )
+      .then((res) => setExchangeRateData(res.data))
+      .catch((err) => console.log(err));
+  }, [setExchangeRateData]);
+
+  // RenderingData
+  useEffect(() => {
+    getCurrencyData();
+  }, [getCurrencyData]);
 
   return (
     <main>
@@ -35,79 +59,35 @@ const ExchangeRate = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th className="first">Template content</th>
-                  <th className="first">Selling rade</th>
-                  <th className="first">Mean rade</th>
+                  <th className="first">Code</th>
+                  <th className="first">Name</th>
+                  <th className="first">Price</th>
 
                   <th className="edit">Edit </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="first">AZN</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
+                {exchangeRateData &&
+                  exchangeRateData.map((currency) => (
+                    <tr key={currency.id}>
+                      <td className="first">{currency.currency_code}</td>
+                      <td className="first">{currency.currency_name}</td>
+                      <td className="first">{currency.currency_price}</td>
 
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button onClick={() => setExchangeRateVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="first">EUR</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button onClick={() => setExchangeRateVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="first">KZT</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button onClick={() => setExchangeRateVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="first">RUB</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button onClick={() => setExchangeRateVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="first">USD</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-                  <td className="first">01 02 2023 - 01 03 2023</td>
-
-                  <td className="edit">
-                    <div className="btn-area">
-                      <button onClick={() => setExchangeRateVisible(true)}>
-                        <img src={edit} alt="edit" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                      <td className="edit">
+                        <div className="btn-area">
+                          <button
+                            onClick={() => {
+                              setExchangeRateVisible(true);
+                              setSelectData(currency);
+                            }}
+                          >
+                            <img src={edit} alt="edit" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -124,7 +104,7 @@ const ExchangeRate = () => {
               : setExchangeRateVisible(false);
           }}
         ></div>
-        <ExchangeRateSideBarMenu/>
+        <ExchangeRateSideBarMenu selectData={selectData} />
       </section>
     </main>
   );

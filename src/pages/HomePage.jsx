@@ -11,24 +11,26 @@ import HotelDEtailPriceListSchedule from "./hotel-detail-section/HotelDEtailPric
 import HotelDEtailPriceList from "./hotel-detail-section/HotelDEtailPriceList";
 import HotelDetailSeo from "./hotel-detail-section/HotelDetailSeo";
 import HotelDetailRoomAdd from "./hotel-detail-section/HotelDetailRoomAdd";
+import Banner from "./home-page-section/Banner";
 // import { useParams } from "react-router-dom";
-const HotelDetail = () => {
+
+const HomePage = () => {
   // Global State
   const {
     mainMneuVisible,
     setMainMneuVisible,
-    hotelDEtailActiveTab,
-    setHotelDEtailActiveTab,
+    homeActiveTab,
+    setHomeActiveTab,
   } = useContext(MainContext);
 
   // Local State && DataList
   const tabList = [
-    { id: 1, tab: "General" },
-    { id: 2, tab: "Description" },
-    { id: 3, tab: "Rooms" },
-    { id: 4, tab: "SEO" },
-    { id: 5, tab: "Price list" },
-    { id: 6, tab: "Price list schedule" },
+    { id: 1, tab: "Banner" },
+    { id: 2, tab: "Dinamic page" },
+    { id: 3, tab: "Naftalan History" },
+    { id: 4, tab: "Diseases" },
+    { id: 5, tab: "FAQ" },
+    { id: 6, tab: "Fav" },
   ];
 
   // // Params
@@ -44,7 +46,7 @@ const HotelDetail = () => {
                 <button onClick={() => setMainMneuVisible(true)}>
                   <img src={menuIcon} alt="menu" />
                 </button>
-                <h2 className="caption">Hotel</h2>
+                <h2 className="caption">Home</h2>
               </div>
             </div>
           </div>
@@ -52,15 +54,14 @@ const HotelDetail = () => {
         <div className="hotel-detail-header">
           <div className="container">
             <ul className="tab-list">
-              {hotelDEtailActiveTab !== "Hotel Add" ? (
+              {homeActiveTab !== "Hotel Add" ? (
                 tabList.map((menuTab) => (
                   <li
                     className={
-                      hotelDEtailActiveTab === menuTab.tab ||
-                      (hotelDEtailActiveTab === "Room Detail" &&
+                      homeActiveTab === menuTab.tab ||
+                      (homeActiveTab === "Room Detail" &&
                         menuTab.tab === "Rooms") ||
-                      (hotelDEtailActiveTab === "Room Add" &&
-                        menuTab.tab === "Rooms")
+                      (homeActiveTab === "Room Add" && menuTab.tab === "Rooms")
                         ? "tab-item active"
                         : "tab-item"
                     }
@@ -69,20 +70,18 @@ const HotelDetail = () => {
                     //     ? "tab-item active"
                     //     : "tab-item"
                     // }
-                    onClick={() => setHotelDEtailActiveTab(menuTab.tab)}
+                    onClick={() => setHomeActiveTab(menuTab.tab)}
                     key={menuTab.id}
                   >
-                    {hotelDEtailActiveTab === "Room Detail" &&
-                    menuTab.tab === "Rooms"
+                    {homeActiveTab === "Room Detail" && menuTab.tab === "Rooms"
                       ? "Room Detail"
-                      : hotelDEtailActiveTab === "Room Add" &&
-                        menuTab.tab === "Rooms"
+                      : homeActiveTab === "Room Add" && menuTab.tab === "Rooms"
                       ? "Room Add"
                       : menuTab.tab}
                   </li>
                 ))
               ) : (
-                <li className="tab-item active">{hotelDEtailActiveTab}</li>
+                <li className="tab-item active">{homeActiveTab}</li>
               )}
             </ul>
           </div>
@@ -96,22 +95,21 @@ const HotelDetail = () => {
           }}
         ></div>
         <div className="hotel-detail-body">
-          {hotelDEtailActiveTab === "General" ||
-          hotelDEtailActiveTab === "Hotel Add" ? (
-            <HotelDetailGeneral />
-          ) : hotelDEtailActiveTab === "Description" ? (
+          {homeActiveTab === "Banner"  ? (
+            <Banner />
+          ) : homeActiveTab === "Description" ? (
             <HotelDetailDescription />
-          ) : hotelDEtailActiveTab === "Rooms" ? (
+          ) : homeActiveTab === "Rooms" ? (
             <HotelDetailRooms />
-          ) : hotelDEtailActiveTab === "Room Add" ? (
+          ) : homeActiveTab === "Room Add" ? (
             <HotelDetailRoomAdd />
-          ) : hotelDEtailActiveTab === "Room Detail" ? (
+          ) : homeActiveTab === "Room Detail" ? (
             <HotelDetailRoomDetail />
-          ) : hotelDEtailActiveTab === "SEO" ? (
+          ) : homeActiveTab === "SEO" ? (
             <HotelDetailSeo />
-          ) : hotelDEtailActiveTab === "Price list" ? (
+          ) : homeActiveTab === "Price list" ? (
             <HotelDEtailPriceList />
-          ) : hotelDEtailActiveTab === "Price list schedule" ? (
+          ) : homeActiveTab === "Price list schedule" ? (
             <HotelDEtailPriceListSchedule />
           ) : null}
         </div>
@@ -120,4 +118,4 @@ const HotelDetail = () => {
   );
 };
 
-export default HotelDetail;
+export default HomePage;

@@ -9,7 +9,7 @@ import axios from "axios";
 // React Hook Form && yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { boolean, number, object, string } from "yup";
+import { object, string } from "yup";
 
 // Icon
 import menuIcon from "../assets/images/icon/burger-menu.svg";
@@ -17,6 +17,7 @@ import folderImg from "../assets/images/icon/folder.svg";
 import add from "../assets/images/icon/add-plus.svg";
 import arrow from "../assets/images/icon/arrow-left.svg";
 import FileFolderSideBarMenu from "../components/side-bar-menu/FileFolderSideBarMenu";
+import FileImgSideBarMenu from "../components/side-bar-menu/FileImgSideBarMenu";
 
 const FileManager = () => {
   // Global state
@@ -27,14 +28,18 @@ const FileManager = () => {
     setImgSideBarVisible,
     folderSideBarVisible,
     setFolderSideBarVisible,
+    folderData,
+    setFolderData,
   } = useContext(MainContext);
 
   // Local State
-  const [folderData, setFolderData] = useState([]);
+
   const [link, setLink] = useState([]);
   const [createFolderModalVisible, setCreateFolderModalVisible] =
     useState(false);
   const [selectFolder, setSelectFolder] = useState(null);
+  const [selectImg, setSelectImg] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   //   Base Folder
   const getBaseFolderDAta = useCallback(async () => {
@@ -111,6 +116,7 @@ const FileManager = () => {
           ...folderData,
           subfolders: newSubfolders,
         });
+        reset();
       })
       .catch((err) => console.log(err));
   };
@@ -160,7 +166,7 @@ const FileManager = () => {
             </div>
           </div>
         </div>
-        {/* <div
+        <div
           className={
             imgSideBarVisible || folderSideBarVisible || mainMneuVisible
               ? "overlay-sub-menu active"
@@ -173,18 +179,38 @@ const FileManager = () => {
               ? setImgSideBarVisible(false)
               : setFolderSideBarVisible(false);
           }}
-        ></div> */}
+        ></div>
         <div className="manager-body">
           <div className="container">
-            <div className="edit-area">
-              <h6 className="title">Add Folder</h6>
-              <button
-                className="add-btn"
-                onClick={() => setCreateFolderModalVisible(true)}
-              >
-                Add <img src={add} alt="add" />
-              </button>
+            <div className="add-area">
+              <div className="edit-area">
+                <h6 className="title">Add Folder</h6>
+                <button
+                  className="add-btn"
+                  onClick={() => setCreateFolderModalVisible(true)}
+                >
+                  Add <img src={add} alt="add" />
+                </button>
+              </div>
+              <div className="edit-group">
+                <div className="form-group checkbox-group">
+                  <label htmlFor="active" className="inp-caption">
+                    Edit                                                                  {""}
+                  </label>
+                  <label htmlFor="active" className="switch">
+                    <input
+                      type="checkbox"
+                      id="active"
+                      name="active"
+                      onChange={() => setEditMode(!editMode)}
+                      className="checkbox"
+                    />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              </div>
             </div>
+
             <div className="edit-area">
               <h6 className="title">Add Photo</h6>
               <label
@@ -212,12 +238,18 @@ const FileManager = () => {
                       className="folder-group"
                       key={folder.id}
                       onClick={() => {
-                        setFolderSideBarVisible(true);
-
-                        setSelectFolder({
-                          parent_folder: folderData.id ? folderData.id : "",
-                          folder: folder,
-                        });
+                        if (link.length === 0) {
+                          getFolderData(folder.id);
+                          setLink([{ id: folder.id, name: folder.name }]);
+                        } else {
+                          if (editMode) {
+                            setFolderSideBarVisible(true);
+                            setSelectFolder({
+                              parent_folder: folderData.id ? folderData.id : "",
+                              folder: folder,
+                            });
+                          }
+                        }
                       }}
                       onDoubleClick={() => {
                         getFolderData(folder.id);
@@ -236,7 +268,16 @@ const FileManager = () => {
                   ))}
                 {folderData.length !== 0 &&
                   folderData.images.map((photo) => (
-                    <div className="image-group" key={photo.id}>
+                    <div
+                      className="image-group"
+                      key={photo.id}
+                      onClick={() => {
+                        if (editMode) {
+                          setImgSideBarVisible(true);
+                          setSelectImg(photo);
+                        }
+                      }}
+                    >
                       <img
                         src={`http://naftalan-backend.uptodate.az${photo.image}`}
                         alt=""
@@ -248,11 +289,18 @@ const FileManager = () => {
           </div>
         </div>
         {createFolderModalVisible && (
-          <div className="create-folder">
+          <div
+            className="create-folder"
+            onClick={() => {
+              setCreateFolderModalVisible(false);
+              reset();
+            }}
+          >
             <form
               className="content"
               noValidate
               onSubmit={handleSubmit(createFolder)}
+              onClick={(e) => e.stopPropagation()}
             >
               <label htmlFor="folder_name">Folder Name</label>
               <input
@@ -266,7 +314,8 @@ const FileManager = () => {
             </form>
           </div>
         )}
-        {selectFolder && <FileFolderSideBarMenu folderData={selectFolder} />} 
+        {selectFolder && <FileFolderSideBarMenu selectFolder={selectFolder} />}
+        {selectImg && <FileImgSideBarMenu selectImg={selectImg} />}
       </section>
     </main>
   );
