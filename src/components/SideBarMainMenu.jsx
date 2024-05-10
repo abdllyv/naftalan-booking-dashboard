@@ -46,11 +46,11 @@ const SideBarMainMenu = () => {
               Comment
             </NavLink>
           </li>
-          <li className="menuItem">
+          {/* <li className="menuItem">
             <NavLink to="/home-page" onClick={() => setMainMneuVisible(false)}>
               Home page
             </NavLink>
-          </li>
+          </li> */}
           <li className="menuItem">
             <NavLink
               to="/exchange-rate"
